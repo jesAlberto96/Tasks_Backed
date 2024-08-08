@@ -25,6 +25,10 @@ Route::group(['prefix' => ''], function () {
 });
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
+Route::group(['prefix' => 'users'], function () {
+    Route::post('check_has_permission/{permission}', [AuthController::class, 'checkIfHasPermission'])->middleware('auth:sanctum');
+});
+
 Route::group(['prefix' => 'tasks'], function () {
     Route::post('getAll', [TaskController::class, 'getAll'])->middleware('auth:sanctum');
     Route::post('', [TaskController::class, 'store'])->middleware('auth:sanctum');

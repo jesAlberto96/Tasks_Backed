@@ -24,6 +24,6 @@ class RoleSeeder extends Seeder
             'name' => 'user',
             'display_name' => 'Usuario',
             'description' => 'Usuario'
-        ])->givePermissionTo(['tasks.create', 'tasks.edit', 'tasks.delete']);
+        ])->givePermissionTo(['tasks.create', 'tasks.edit']);
     }
 }

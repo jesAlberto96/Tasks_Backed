@@ -14,7 +14,10 @@
     - Ejecutar: php artisan migrate
 6. Ejecutar Seeders
     - php artisan db:seed
-        - Se crea un usuario para probar con credeciales
+        - Se crea un admin con permisos globales, puede ver todas las tareas de todos los usuarios
             - admin@admin.com
+            - secret
+        - Se crea usuario con permisos especificos, solo puede visualizar las tareas que este crea
+            - usuario@usuario.com
             - secret
 7. Ejecutar: php artisan serve

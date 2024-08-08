@@ -10,13 +10,14 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\ResponseController as Response;
 use App\Http\Resources\Auth\AuthResource;
 use App\Http\Requests\StoreLoginRequest;
+use App\Repositories\UserRepository;
 use App\Models\User;
 
 class AuthController extends Controller
 {
     public function login(StoreLoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = UserRepository::getOneByWhere(array(['email', $request->email]));
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
@@ -31,6 +32,8 @@ class AuthController extends Controller
             'user' => [
                 'name' => $user->name,
                 'email' => $user->email,
+                'rol' => $user->getRoleNames(),
+                'permissions' => $user->getAllPermissions(),
             ],
         ]);
 
@@ -46,5 +49,10 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+
+    public function checkIfHasPermission($permission)
+    {
+        return auth()->user()->hasAnyPermission([$permission]);
     }
 }
